@@ -14,6 +14,7 @@
 		09972FAA220BED2200B4EAAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09972FA8220BED2200B4EAAA /* LaunchScreen.storyboard */; };
 		09972FB5220BED2200B4EAAA /* Multipeer_ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09972FB4220BED2200B4EAAA /* Multipeer_ChatTests.swift */; };
 		09972FC0220BED2200B4EAAA /* Multipeer_ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09972FBF220BED2200B4EAAA /* Multipeer_ChatUITests.swift */; };
+		09972FCF220BEFC900B4EAAA /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09972FCE220BEFC900B4EAAA /* MultipeerConnectivity.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		09972FBB220BED2200B4EAAA /* Multipeer_ChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Multipeer_ChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09972FBF220BED2200B4EAAA /* Multipeer_ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multipeer_ChatUITests.swift; sourceTree = "<group>"; };
 		09972FC1220BED2200B4EAAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09972FCE220BEFC900B4EAAA /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09972FCF220BEFC900B4EAAA /* MultipeerConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +84,7 @@
 				09972FB3220BED2200B4EAAA /* Multipeer_ChatTests */,
 				09972FBE220BED2200B4EAAA /* Multipeer_ChatUITests */,
 				09972F9D220BED1E00B4EAAA /* Products */,
+				09972FCD220BEFC900B4EAAA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +127,14 @@
 				09972FC1220BED2200B4EAAA /* Info.plist */,
 			);
 			path = Multipeer_ChatUITests;
+			sourceTree = "<group>";
+		};
+		09972FCD220BEFC900B4EAAA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				09972FCE220BEFC900B4EAAA /* MultipeerConnectivity.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
