@@ -11,45 +11,6 @@ import MultipeerConnectivity
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
-    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        // Called when a peer sends an NSData to us
-        // This needs to run on the main queue
-        
-        DispatchQueue.main.async {
-            var msg = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-            self.updateChat(text: msg as! String, fromPeer: peerID)
-        }
-        
-        
-        /*
-        dispatch_async(dispatch_get_main_queue()) {
-            
-            var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
-            self.updateChat(msg, fromPeer: peerID)
-        }
-        */
-    }
-    
-    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        // Called when a connected peer changes state (for example, goes offline)
-    }
-    
-    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
-        // Called when a peer establishes a stream with us
-    }
-    
-    
-    // The following methods do nothing, but the MCSessionDelegate protocol requires that we implement them.
-    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
-        // Called when a peer starts sending a file to us
-    }
-    
-    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
-        // Called when a file has finished transferring from another peer
-    }
-    
-    
     let serviceType = "LCOC-Chat"
     
     var browser : MCBrowserViewController!
@@ -71,7 +32,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         
         // create the browser viewcontroller with a unique service name
         self.browser = MCBrowserViewController(serviceType: serviceType, session: self.session)
-        self.browser.delegate = self
+        self.browser.delegate = self;
         self.assistant = MCAdvertiserAssistant(serviceType: serviceType, discoveryInfo: nil, session: self.session)
         
         // tell the assistant to start advertising our fabulous chat
@@ -82,20 +43,16 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     @IBAction func sendChat(_ sender: Any) {
         // Bundle up the text in the message field, and send it off to all connected peers
         
-        let msg = self.messageField.text?.data(using: String.Encoding.utf8,
-                                                           allowLossyConversion: false)
+        let msg = self.messageField.text?.data(using: String.Encoding.utf8, allowLossyConversion: false)
         
         var error : NSError?
         
-        //self.session.send(<#T##data: Data##Data#>, toPeers: <#T##[MCPeerID]#>, with: <#T##MCSessionSendDataMode#>)
-        //self.session.send(msg!, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
-        //self.session.sendData(msg, toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error: &error)
-        
-        //self.session.send(msg ?? default value, <#Data#>, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable /*, error: &error*/)
-        
-        
-        if error != nil {
-            print("Error sending data: \(String(describing: error?.localizedDescription))")
+        do {
+            try self.session.send(msg!, toPeers: self.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
+            //try print("OK")
+            
+        } catch {
+            print("Error sending data: \(String(describing: error.localizedDescription))")
         }
         
         self.updateChat(text: self.messageField.text!, fromPeer: self.peerID)
@@ -113,6 +70,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         switch peerID {
         case self.peerID:
             name = "Me"
+            //break
         default:
             name = peerID.displayName
         }
@@ -138,6 +96,34 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         self.dismiss(animated: true, completion: nil)
     }
     
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        // Called when a peer sends an NSData to us
+        // This needs to run on the main queue
+        
+        DispatchQueue.main.async {
+            let msg = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            self.updateChat(text: msg! as String, fromPeer: peerID)
+        }
+        
+    }
+    
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        // Called when a connected peer changes state (for example, goes offline)
+    }
+    
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        // Called when a peer establishes a stream with us
+    }
+    
+    
+    // The following methods do nothing, but the MCSessionDelegate protocol requires that we implement them.
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        // Called when a peer starts sending a file to us
+    }
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
+        // Called when a file has finished transferring from another peer
+    }
     
 }
 
